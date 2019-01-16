@@ -19,6 +19,7 @@ class G_items
 	const char *fragmentShaderSource = "#version 130 core\n"
 		"out vec4 FragColor;\n"
 		"in vec2 TexCoord;\n"
+
 		"uniform sampler2D ourTexture;\n"
 
 		"void main()\n"
@@ -28,6 +29,7 @@ class G_items
 
 	GLuint vertexShader, fragmentShader, shaderProgram;
 	unsigned int VBO, VAO, EBO, texture;
+	float distance = 3;
 public:
 	Fileman f;
 

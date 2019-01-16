@@ -9,7 +9,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 class Display
 {
 private:
-	const int width = 640, height = 480;
+	const int width = 800, height = 450;
 	G_items graphics;
 	GLFWwindow* window;
 	Transformation t;

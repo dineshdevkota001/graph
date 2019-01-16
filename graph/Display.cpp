@@ -58,11 +58,11 @@ void Display::rotate() {
 			float sum = 0;
 			for (int j = 0; j < 3; j++)
 			{
-				sum += t.trans[i][j] * graphics.f.vertices[m + j];
+				sum += t.trans[i][j] * graphics.f.vertice[m + j];
 			}
-			graphics.f.vertices[m + i] = sum;
+			graphics.f.vertice[m + i] = sum;
 		}
-		m += 5;
+		m += 3;
 	}
 }
 
@@ -72,10 +72,8 @@ void Display::translate() {
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			graphics.f.vertices[m++] += t.trans[i][3];
+			graphics.f.vertice[m++] += t.trans[i][3];
 		}
-		m++;
-		m++;
 	}
 }
 
@@ -87,8 +85,6 @@ void Display::scale() {
 		{
 			graphics.f.vertices[m++] *= t.trans[i][i];
 		}
-		m++;
-		m++;
 	}
 }
 
@@ -127,6 +123,11 @@ void Display::processInput()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	}
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		float x, y, z;
 		cin >> x >> y >> z;
@@ -148,53 +149,53 @@ void Display::processInput()
 		Display::translate();
 		graphics.bindAll();
 	}
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		t.makeRotMatrix(0, 0, -0.1f);
-		Display::rotate();
-		graphics.bindAll();
-	}
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		t.makeRotMatrix(0, 0, 0.1f);
-		Display::rotate();
-		graphics.bindAll();
-	}
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		t.makeRotMatrix(0, 0.1f, 0);
-		Display::rotate();
-		graphics.bindAll();
-	}
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		t.makeRotMatrix(0, -0.1f, 0);
-		Display::rotate();
-		graphics.bindAll();
-	}
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		t.makeRotMatrix(-0.1f, 0, 0);
+		t.makeRotMatrix(0, 0, -0.3f);
 		Display::rotate();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		t.makeRotMatrix(0.1f, 0, 0);
+		t.makeRotMatrix(0, 0, 0.3f);
+		Display::rotate();
+		graphics.bindAll();
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		t.makeRotMatrix(0, 0.3f, 0);
+		Display::rotate();
+		graphics.bindAll();
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		t.makeRotMatrix(0, -0.3f, 0);
+		Display::rotate();
+		graphics.bindAll();
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		t.makeRotMatrix(-0.3f, 0, 0);
+		Display::rotate();
+		graphics.bindAll();
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		t.makeRotMatrix(0.3f, 0, 0);
 		Display::rotate();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
-		t.makeTraMatrix(0, 0.005f, 0);
+		t.makeTraMatrix(0, 0.01f, 0);
 		Display::translate();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
-		t.makeTraMatrix(0, -0.005f, 0);
+		t.makeTraMatrix(0, -0.01f, 0);
 		Display::translate();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
-		t.makeTraMatrix(0.005f, 0, 0);
+		t.makeTraMatrix(0.01f, 0, 0);
 		Display::translate();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-		t.makeTraMatrix(-0.005f, 0, 0);
+		t.makeTraMatrix(-0.01f, 0, 0);
 		Display::translate();
 		graphics.bindAll();
 	}
@@ -204,13 +205,13 @@ void Display::processInput()
 	}
 	if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS)
 	{
-		t.makescaleMatrix(1.003f, 1.003f, 1.003f);
+		t.makescaleMatrix(1.03f, 1.03f, 1.03f);
 		Display::scale();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS)
 	{
-		t.makescaleMatrix(0.997f, 0.997f, 0.997f);
+		t.makescaleMatrix(0.98f, 0.98f, 0.98f);
 		Display::scale();
 		graphics.bindAll();
 	}

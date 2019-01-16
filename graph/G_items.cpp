@@ -36,6 +36,19 @@ void G_items::makeprogram()
 		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 	cout << "makeprogram exited " << endl;
 }
 
@@ -49,7 +62,7 @@ void G_items::bindTexture(){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	cout << "done";
 	int width, height, nrChannels;
-	unsigned char *data = stbi_load("TEXTURE.png", &width, &height, &nrChannels, 0);
+	unsigned char *data = stbi_load("Resources/texture.png", &width, &height, &nrChannels, 0);
 	cout << "done";
 	if (!data)
 	{
@@ -60,13 +73,21 @@ void G_items::bindTexture(){
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
+	glEnable(GL_CULL_FACE);
 	stbi_image_free(data);
 	cout << "Bind texture exited" << endl;
 }
 
 void G_items::bindAll(){
 	cout << "Binding all pointers and all" << endl;
-
+	int m = 0, l=0;
+	for (int i = 0; i < (f.nov) / 5; i++)
+	{
+		f.vertices[m] = f.vertice[l]*(distance - f.vertice[l + 2]) / distance;
+		f.vertices[m + 1] = f.vertice[l + 1] * (distance - f.vertice[l + 2]) / distance;
+		l += 3;
+		m += 5;
+	}
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -84,24 +105,6 @@ void G_items::bindAll(){
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	
-	glBindAttribLocation(shaderProgram,0,"aPos");
-	glBindAttribLocation(shaderProgram,1,"aTexCoord");
-
-	int success;
-	char infoLog[512];
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
 	cout << "binding all exited" << endl;
 }
 
