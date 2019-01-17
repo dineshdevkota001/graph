@@ -18,7 +18,7 @@ void Fileman::imp_obj(){
 		cout << "cannot open file" << endl;
 		exit(1);
 	}
-	float max = 5;
+	float max = 0;
 	for (string line; getline(file, line); )
 	{
 		istringstream in(line);
@@ -47,7 +47,7 @@ void Fileman::imp_obj(){
 			float x, y;
 			in >> x >> y;
 			textures[j++] = x;
-			textures[j++] = y;
+			textures[j++] = 1-y;
 			continue;
 		}
 		else if (type == "f") {

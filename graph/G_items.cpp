@@ -79,15 +79,14 @@ void G_items::bindTexture(){
 }
 
 void G_items::bindAll(){
-	cout << "Binding all pointers and all" << endl;
-	int m = 0, l=0;
+	/*int m = 0, l=0;
 	for (int i = 0; i < (f.nov) / 5; i++)
 	{
 		f.vertices[m] = f.vertice[l]*(distance - f.vertice[l + 2]) / distance;
 		f.vertices[m + 1] = f.vertice[l + 1] * (distance - f.vertice[l + 2]) / distance;
 		l += 3;
 		m += 5;
-	}
+	}*/
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -104,8 +103,6 @@ void G_items::bindAll(){
 
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-	
-	cout << "binding all exited" << endl;
 }
 
 void G_items::deleteAll(){

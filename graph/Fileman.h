@@ -13,10 +13,10 @@ class Fileman
 public:
 	//increase the no. of vertices as required
 
-	float* vertices = new float[6000];
-	float* vertice = new float[6000];
-	float* textures = new float[3000];
-	int* indices= new int[30000];
+	float* vertices = new float[10000];
+	float* vertice = new float[10000];
+	float* textures = new float[10000];
+	int* indices= new int[10000];
 	int nov, nof, non, nom;
 
 	Fileman();

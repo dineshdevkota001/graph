@@ -16,7 +16,7 @@ int Display::create_window() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwWindowHint(GLFW_CONTEXT_REVISION, 0);
 
-	window = glfwCreateWindow(width, height, "OpenGL Viewport", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Gibson 1275", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -32,6 +32,7 @@ int Display::create_window() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+	glViewport((width - height) / 2, 0, height, height);
 	return 0;
 	cout << "exited of creating window" << endl;
 }
@@ -58,11 +59,11 @@ void Display::rotate() {
 			float sum = 0;
 			for (int j = 0; j < 3; j++)
 			{
-				sum += t.trans[i][j] * graphics.f.vertice[m + j];
+				sum += t.trans[i][j] * graphics.f.vertices[m + j];
 			}
-			graphics.f.vertice[m + i] = sum;
+			graphics.f.vertices[m + i] = sum;
 		}
-		m += 3;
+		m += 5;
 	}
 }
 
@@ -72,8 +73,10 @@ void Display::translate() {
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			graphics.f.vertice[m++] += t.trans[i][3];
+			graphics.f.vertices[m++] += t.trans[i][3];
 		}
+		m++;
+		m++;
 	}
 }
 
@@ -85,6 +88,8 @@ void Display::scale() {
 		{
 			graphics.f.vertices[m++] *= t.trans[i][i];
 		}
+		m++;
+		m++;
 	}
 }
 
@@ -220,7 +225,10 @@ void Display::processInput()
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	cout << "Viewport changed"<<width<<"X"<<height<< endl;
-	glViewport(0, 0, width, height);
+	if (width > height)
+		glViewport((width - height) / 2, 0, height, height);
+	else
+		glViewport(0, (height - width) / 2, width, width);
 }
 
 Display::~Display()
