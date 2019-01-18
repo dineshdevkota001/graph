@@ -13,7 +13,7 @@ class G_items
 		"out vec2 TexCoord;\n"
 		"void main()\n"
 		"{\n"
-		"   gl_Position = vec4(aPos.x*(3-aPos.z)/3, aPos.y*(3-aPos.z)/3, aPos.z, 1.0);\n"
+		"   gl_Position = vec4(aPos.x*(9-3*aPos.z)/16, aPos.y*(3-aPos.z)/3, aPos.z, 1.0);\n"
 		"	TexCoord = aTexCoord;\n"
 		"}\0";
 	const char *fragmentShaderSource = "#version 130 core\n"
@@ -29,9 +29,8 @@ class G_items
 
 	GLuint vertexShader, fragmentShader, shaderProgram;
 	unsigned int VBO, VAO, EBO, texture;
-	float distance = 3;
 public:
-	Fileman f;
+	Fileman file;
 
 	G_items();
 

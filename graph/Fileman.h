@@ -11,17 +11,17 @@ class Fileman
 {
 	string s;
 public:
-	//increase the no. of vertices as required
 
-	float* vertices = new float[10000];
-	float* vertice = new float[10000];
-	float* textures = new float[10000];
-	int* indices= new int[10000];
-	int nov, nof, non, nom;
+	float* vertices = new float[8400];
+	float* textures = new float[5600];
+	int* indices= new int[7800];
+	int nov, nof;
 
 	Fileman();
 	Fileman(string a);
+	
 	void imp_obj();
+	void deletemem();
 	~Fileman();
 };
 

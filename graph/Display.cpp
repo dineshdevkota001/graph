@@ -6,7 +6,7 @@ Display::Display()
 {}
 
 int Display::create_window() {
-	cout << "creating window" << endl;
+	cout << "Creating Window" << endl;
 	if (!glfwInit()) {
 		cout << "GLFW NOT INITIATED!!!" << endl;
 	}
@@ -16,7 +16,15 @@ int Display::create_window() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwWindowHint(GLFW_CONTEXT_REVISION, 0);
 
-	window = glfwCreateWindow(width, height, "Gibson 1275", NULL, NULL);
+	int i;
+	cout << "1.Windowed or 2.Fullscreen" << endl;
+
+	cin >> i;
+	if (i!=2)
+		window = glfwCreateWindow(1008, 567, "Gibson 1275", NULL, NULL);
+	else
+		window = glfwCreateWindow(width, height, "Gibson 1275", glfwGetPrimaryMonitor(), NULL);
+	
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -32,36 +40,30 @@ int Display::create_window() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-	glViewport((width - height) / 2, 0, height, height);
 	return 0;
-	cout << "exited of creating window" << endl;
 }
 
 int Display::entrypoint()
 {
-	cout << "entrypoint function" << endl;
-
 	Display::create_window();
 	graphics.makeprogram();
 	Display::refresh_window();
 	Display::close_window();
-	cout << "exiting entrypoint" << endl;
-
 	return 0;
 }
 
 void Display::rotate() {
 	int m = 0;
-	for (int k = 0; k < (graphics.f.nov) / 5; k++)
+	for (int k = 0; k < (graphics.file.nov) / 5; k++)
 	{
 		for (int i = 0; i < 3; i++)
 		{
 			float sum = 0;
 			for (int j = 0; j < 3; j++)
 			{
-				sum += t.trans[i][j] * graphics.f.vertices[m + j];
+				sum += t.trans[i][j] * graphics.file.vertices[m + j];
 			}
-			graphics.f.vertices[m + i] = sum;
+			graphics.file.vertices[m + i] = sum;
 		}
 		m += 5;
 	}
@@ -69,11 +71,11 @@ void Display::rotate() {
 
 void Display::translate() {
 	int m = 0;
-	for (int k = 0; k < (graphics.f.nov) / 5; k++)
+	for (int k = 0; k < (graphics.file.nov) / 5; k++)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			graphics.f.vertices[m++] += t.trans[i][3];
+			graphics.file.vertices[m++] += t.trans[i][3];
 		}
 		m++;
 		m++;
@@ -82,11 +84,11 @@ void Display::translate() {
 
 void Display::scale() {
 	int m = 0;
-	for (int k = 0; k < (graphics.f.nov) / 5; k++)
+	for (int k = 0; k < (graphics.file.nov) / 5; k++)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			graphics.f.vertices[m++] *= t.trans[i][i];
+			graphics.file.vertices[m++] *= t.trans[i][i];
 		}
 		m++;
 		m++;
@@ -97,8 +99,6 @@ void Display::scale() {
 void Display::refresh_window() {
 
 	graphics.bindAll();
-	cout << "Refresh loop" << endl;
-
 	while (!glfwWindowShouldClose(window))
 	{
 		Display::processInput();
@@ -112,7 +112,7 @@ void Display::refresh_window() {
 
 
 void Display::close_window() {
-	cout << "closing window" << endl;
+	cout << "Exiting Window" << endl;
 
 	graphics.deleteAll();
 	glfwTerminate();
@@ -205,7 +205,7 @@ void Display::processInput()
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		graphics.f.imp_obj();
+		graphics.file.imp_obj();
 		graphics.bindAll();
 	}
 	if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS)
@@ -225,10 +225,7 @@ void Display::processInput()
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	cout << "Viewport changed"<<width<<"X"<<height<< endl;
-	if (width > height)
-		glViewport((width - height) / 2, 0, height, height);
-	else
-		glViewport(0, (height - width) / 2, width, width);
+	glViewport(0, 0, height, height);
 }
 
 Display::~Display()

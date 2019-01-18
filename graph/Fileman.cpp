@@ -1,7 +1,5 @@
 #include "Fileman.h"
 
-
-
 Fileman::Fileman()
 {
 	s = "test";
@@ -11,13 +9,15 @@ Fileman::Fileman()
 Fileman::Fileman(string a):s(a) {}
 
 void Fileman::imp_obj(){
+	cout << "Opening File.." << endl;
 	ifstream file;
 	int i = 0, j = 0, k = 0, l = 0;
-	file.open("Resources/"+s+".obj");
+	file.open("Resources/"+s+".object");
 	if (!file) {
 		cout << "cannot open file" << endl;
 		exit(1);
 	}
+	cout << "Importing Vertices and Textures .";
 	float max = 0;
 	for (string line; getline(file, line); )
 	{
@@ -30,13 +30,10 @@ void Fileman::imp_obj(){
 			float x, y, z;
 			in >> x >> y >> z;
 			vertices[i++] = x;
-			vertice[l++] = x;
 			if (fabs(x) > max) max = fabs(x);
 			vertices[i++] = y;
-			vertice[l++] = y;
 			if (fabs(y) > fabs(max)) max = fabs(y);
 			vertices[i++] = -z;
-			vertice[l++] = -z;
 			if (fabs(z) > fabs(max)) max = fabs(z);
 			i++;
 			i++;
@@ -63,22 +60,37 @@ void Fileman::imp_obj(){
 			continue;
 		}
 
+		l++;
+		if (l == 100)
+		{
+			cout << ".";
+			l = 0;
+		}
 	}
+	cout << endl << "Calculating Optimals";
 	nov = i;
-	non = j;
 	nof = k;
 	l = 0;
 	for (int m = 0; m < nov; m) {
-		vertice[l++] /= max;
-		vertice[l++] /= max;
-		vertice[l++] /= max;
 		vertices[m++] /= max;
 		vertices[m++] /= max;
 		vertices[m++] /= max;
 		m++;
 		m++;
+		l++;
+		if (l == 16) {
+			cout << ".";
+		}
 	}
+	cout << endl;
 	file.close();
+}
+
+void Fileman::deletemem()
+{
+	delete[] indices;
+	delete[] textures;
+	delete[] vertices;
 }
 
 

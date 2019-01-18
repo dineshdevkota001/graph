@@ -11,7 +11,8 @@ void Transformation::defaultize() {
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			trans[i][j] = def[i][j];
+			if (i == j) trans[i][i] = 1;
+			else trans[i][j] = 0;
 		}
 	}
 }
